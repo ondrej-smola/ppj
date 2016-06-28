@@ -1,5 +1,6 @@
 package javappj;
 
+import javappj.data.Coment;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -21,8 +22,6 @@ public class ComentDao {
         return sessionFactory.getCurrentSession();
     }
     @SuppressWarnings("unchecked")
-
-
     public List<Coment> getComUser(String username) {
         Criteria crit = session().createCriteria(Coment.class);
 
@@ -33,6 +32,7 @@ public class ComentDao {
 
         return crit.list();
     }
+    @SuppressWarnings("unchecked")
     public List<Coment> getComImg(int imgid) {
         Criteria crit = session().createCriteria(Coment.class);
 
