@@ -10,6 +10,6 @@ import java.util.UUID;
  * Created by The CAT on 27.6.2016.
  */
 @Repository
-@RepositoryRestResource(collectionResourceRel = "comments", path = "comments")
+@RepositoryRestResource(collectionResourceRel = "coments", path = "coments")
 public interface ComentRep extends CrudRepository<Coment, UUID> {
 }

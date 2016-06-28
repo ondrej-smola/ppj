@@ -52,12 +52,12 @@ public class Serv {
 
         return images;
     }
-    public List<Image> getImagesByAuthor(String author) {
-        if (author == null) {
+    public List<Image> getImagesByAuthor(String user) {
+        if (user == null) {
             return null;
         }
 
-        List<Image> images = imageRepository.findByAuthorName(author);
+        List<Image> images = imageRepository.findByUserName(user);
         Hibernate.initialize(images);
 
         if (images.size() == 0) {
@@ -114,7 +114,7 @@ public class Serv {
 
     public void addComment(Image image, String text,  String username) {
         User user = (User) authorRepository.findByName(username);
-        commentRepository.save(new Coment(UUID.randomUUID(), user,image, text));
+        commentRepository.save(new Coment(UUID.randomUUID(),text, user,image));
     }
 }
 

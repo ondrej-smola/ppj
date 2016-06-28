@@ -31,7 +31,9 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         SpringApplication app = new SpringApplication(Main.class);
+        System.out.println("START1  SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
         ConfigurableApplicationContext context = app.run(args);
+        System.out.println("START 2 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
 
         log.debug(Arrays.toString(context.getEnvironment().getActiveProfiles()));
 

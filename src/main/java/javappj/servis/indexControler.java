@@ -4,37 +4,37 @@ package javappj.servis;
  * Created by The CAT on 27.6.2016.
  */
 
-import javappj.data.Image;
+import javappj.data.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.UUID;
 
 
 @Controller
+@RequestMapping("/")
 public class indexControler {
-
+    @Autowired
     private Serv serv;
 
 
     @Autowired
     public void setImageRepository(Serv serv) {
+
         this.serv = serv;
-
     }
-
     @Value("${path}")
     private String path;
 
-    @RequestMapping("/projekt")
-    public String showHome(Model model, @RequestParam(value = "id", required = false) String actual) {
+  //  @RequestMapping("/projekt")
+    @RequestMapping(value="/projekt", method = RequestMethod.GET)
+    public String showIndex(Model model, @RequestParam(value = "id", required = false) String actual) {
         Image image;
 
         if(actual == null) {
@@ -48,29 +48,31 @@ public class indexControler {
         }
 
         model.addAttribute("image", image);
-        model.addAttribute("actual", image.getImg_id().toString());
+        model.addAttribute("actual", image.getId().toString());
 
         if (!image.getLocation().startsWith("http")) {
             model.addAttribute("path", path);
         } else {
             model.addAttribute("path", "");
         }
-
+       // System.out.println("MVC TADY");
         return "projekt";
     }
+
+
 
     @RequestMapping("/likeImg")
     public String likeImage(RedirectAttributes redirectAttributes, @RequestParam(value = "id") String id) {
         serv.LikeImg(UUID.fromString(id));
         redirectAttributes.addAttribute("id", id);
-        return "redirect:/projekt?id="+id;
+        return "redirect:/projekt";
     }
 
     @RequestMapping("/dislikeImg")
     public String dislikeImage(RedirectAttributes redirectAttributes, @RequestParam(value = "id") String id) {
         serv.DislikeImg(UUID.fromString(id));
         redirectAttributes.addAttribute("id", id);
-        return "redirect:/projekt?id="+id;
+        return "redirect:/projekt";
     }
 
     @RequestMapping("/likeComment")
@@ -78,7 +80,7 @@ public class indexControler {
                               @RequestParam(value = "commentId") String commentId) {
         serv.LikeComent(UUID.fromString(commentId));
         redirectAttributes.addAttribute("id", id);
-        return "redirect:/projekt?id="+id;
+        return "redirect:/projekt";
     }
 
     @RequestMapping("/dislikeComment")
@@ -86,42 +88,8 @@ public class indexControler {
                                  @RequestParam(value = "commentId") String commentId) {
         serv.DislikeComent(UUID.fromString(commentId));
         redirectAttributes.addAttribute("id", id);
-        return "redirect:/projekt?id="+id;
-    }
-    private fileSys files;
-
-    public static final String UPLOAD_PATH = "/upload/{name}";
-
-    @RequestMapping(value = UPLOAD_PATH, method = RequestMethod.POST)
-    public
-    @ResponseBody
-    void uploadImage(@PathVariable("name") String name,
-                            @RequestParam("data") MultipartFile imageData,
-                            HttpServletResponse response) {
-
-       // ImageStatus state = new ImageStatus(ImageStatus.ImageState.READY);
-
-        setFileManager();
-
-        try {
-            files.newImage(name, imageData.getInputStream());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
+        return "redirect:/projekt";
     }
 
-    public void setFileManager() {
 
-        try {
-
-           files = new fileSys();
-
-        } catch (IOException e) {
-
-            e.printStackTrace();
-
-        }
-    }
 }

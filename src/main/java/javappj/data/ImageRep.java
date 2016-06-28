@@ -24,9 +24,9 @@ public interface ImageRep extends CrudRepository<Image, UUID> {
 
     public Image findFirstByIdGreaterThanOrderById(UUID id);
 
-    @Query("select Image from Image  where Image.author.name=:author")
-    public List<Image> findByAuthorName(@Param("user") String author);
+    @Query("select Image from Image  where Image.User.name=:user")
+    public List<Image> findByUserName(@Param("user") String user);
 
     @Query("select Image from Image  inner join Image.tagSet tags where tags.value = :tag")
-    public List<Image> findByTagSetIsIn(@Param("mytag") String tag);
+    public List<Image> findByTagSetIsIn(@Param("mytag") String mytag);
 }
