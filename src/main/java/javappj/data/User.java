@@ -16,12 +16,13 @@ import java.util.UUID;
 
 
 @Entity
-@Table(name = "authors")
-@Document(collection = "authors")
+@Table(name = "users")
+@Document(collection = "users")
 public class User {
     @Id
     @org.springframework.data.annotation.Id
-    @Column
+    @Column(columnDefinition = "BINARY(16)")
+   // @Type(type="text")
     private UUID id;
 
     @TextIndexed

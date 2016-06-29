@@ -16,48 +16,20 @@ import java.util.UUID;
 public class Serv {
 
     @Autowired
-    private ImageRep imageRepository;
+    private ImageRep imageRep;
 
     @Autowired
-    private ComentRep commentRepository;
+    private ComentRep comentRep;
 
     @Autowired
-    private UserRep authorRepository;
+    private UserRep userRep;
 
     public List<Image> getImagesByName(String name) {
         if (name == null) {
             return null;
         }
 
-        List<Image> images = imageRepository.findByName(name);
-        Hibernate.initialize(images);
-
-        if (images.size() == 0) {
-            return null;
-        }
-
-        return images;
-    }
-    public List<Image> getImagesByTag(String tag) {
-        if (tag == null) {
-            return null;
-        }
-
-        List<Image> images = imageRepository.findByTagSetIsIn(tag);
-        Hibernate.initialize(images);
-
-        if (images.size() == 0) {
-            return null;
-        }
-
-        return images;
-    }
-    public List<Image> getImagesByAuthor(String user) {
-        if (user == null) {
-            return null;
-        }
-
-        List<Image> images = imageRepository.findByUserName(user);
+        List<Image> images = imageRep.findByName(name);
         Hibernate.initialize(images);
 
         if (images.size() == 0) {
@@ -68,53 +40,67 @@ public class Serv {
     }
 
 
+
+
+
+    public List<Image> findByImageUser(User user) {
+        return imageRep.findByUser(user);
+    }
+
+   /* public List<Image> findByImageTags(List<String> tag) {
+        return imageRepository.findByMyTagsIn(tag);
+    }*/
+
+    public List<Image> findByImageTags(String tag) {
+        return imageRep.findBytagSetValue(tag);
+    }
 
     public Image getImageById(UUID id) {
         if (id == null) {
             return null;
         }
-        return imageRepository.findOne(id);
+        return imageRep.findOne(id);
     }
 
     public Image getFirstImage() {
-        return imageRepository.findFirstByOrderById();
+        return imageRep.findFirstByOrderById();
     }
 
     public Image getNextImageById(UUID prevId) {
-        return imageRepository.findFirstByIdGreaterThanOrderById(prevId);
+        return imageRep.findFirstByIdGreaterThanOrderById(prevId);
     }
 
     public List<Image> getAllImages() {
-        return imageRepository.findAll();
+        return imageRep.findAll();
     }
 
     public void LikeImg(UUID id) {
-        Image image = imageRepository.findOne(id);
+        Image image = imageRep.findOne(id);
         image.Like();
-        imageRepository.save(image);
+        imageRep.save(image);
     }
     public void LikeComent(UUID id) {
-        Coment coment = commentRepository.findOne(id);
+        Coment coment = comentRep.findOne(id);
         coment.Like();
-        commentRepository.save(coment);
+        comentRep.save(coment);
     }
 
     public void DislikeComent(UUID id) {
-        Coment coment = commentRepository.findOne(id);
+        Coment coment = comentRep.findOne(id);
         coment.Dislike();
-        commentRepository.save(coment);
+        comentRep.save(coment);
     }
 
 
     public void DislikeImg(UUID id) {
-        Image image = imageRepository.findOne(id);
+        Image image = imageRep.findOne(id);
         image.Dislike();
-        imageRepository.save(image);
+        imageRep.save(image);
     }
 
     public void addComment(Image image, String text,  String username) {
-        User user = (User) authorRepository.findByName(username);
-        commentRepository.save(new Coment(UUID.randomUUID(),text, user,image));
+        User user = (User) userRep.findByName(username);
+        comentRep.save(new Coment(UUID.randomUUID(),text, user,image));
     }
 }
 

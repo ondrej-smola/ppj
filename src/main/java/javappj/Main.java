@@ -13,7 +13,10 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 
 import java.util.Arrays;
 
@@ -28,15 +31,17 @@ import java.util.Arrays;
 public class Main {
 
     private static final Logger log = LoggerFactory.getLogger(Main.class);
+    @Bean
+    public MultipartResolver multipartResolver() {
+        return new StandardServletMultipartResolver();
+    }
 
     public static void main(String[] args) throws Exception {
         SpringApplication app = new SpringApplication(Main.class);
-        System.out.println("START1  SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
         ConfigurableApplicationContext context = app.run(args);
-        System.out.println("START 2 SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
 
         log.debug(Arrays.toString(context.getEnvironment().getActiveProfiles()));
-
+        log.warn("START");
     }
 
 }

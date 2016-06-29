@@ -23,7 +23,7 @@ public class Image {
 
     @Id
     @org.springframework.data.annotation.Id
-    @Column
+     @Column(columnDefinition = "BINARY(16)")
     private UUID id;
 
     @Column(name = "name", unique=true)
@@ -39,14 +39,14 @@ public class Image {
     private Date changedDate;
 
     @Column(name = "likes")
-    private Integer likesCount;
+    private Integer likes;
 
     @Column(name = "dislikes")
-    private Integer dislikesCount;
+    private Integer dislikes;
 
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "author_id")
+    @JoinColumn(name = "user_id")
     @DBRef
     private User user;
 
@@ -87,8 +87,8 @@ public class Image {
         this.user = user;
         this.commentSet = commentSet;
         this.tagSet = tagSet;
-        this.likesCount = 0;
-        this.dislikesCount = 0;
+        this.likes = 0;
+        this.dislikes = 0;
         this.createdDate = new Date();
     }
 
@@ -99,6 +99,26 @@ public class Image {
 
     public UUID getId() {
         return id;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public Date getChangedDate() {
+        return changedDate;
+    }
+
+    public void setChangedDate(Date changedDate) {
+        this.changedDate = changedDate;
+    }
+
+    public Integer getLikes() {
+        return likes;
     }
 
     public void setId(UUID id) {
@@ -121,36 +141,18 @@ public class Image {
         this.Location = Location;
     }
 
-    public Date getCreatedDate() {
-        return createdDate;
-    }
 
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public Date getChangedDate() {
-        return changedDate;
-    }
-
-    public void setChangedDate(Date changedDate) {
-        this.changedDate = changedDate;
-    }
-
-    public Integer getLikesCount() {
-        return likesCount;
-    }
 
     public void Like() {
-        this.likesCount = this.likesCount+1;
+        this.likes= this.likes+1;
     }
 
-    public Integer getDislikesCount() {
-        return dislikesCount;
+    public Integer getDislikes() {
+        return dislikes;
     }
 
     public void Dislike() {
-        this.dislikesCount = this.dislikesCount+1;
+        this.dislikes = this.dislikes+1;
     }
 
     public User getUser() {
@@ -185,8 +187,8 @@ public class Image {
                 ", url='" + Location + '\'' +
                 ", createdDate=" + createdDate +
                 ", changedDate=" + changedDate +
-                ", likesCount=" + likesCount +
-                ", dislikesCount=" + dislikesCount +
+                ", likes=" + likes +
+                ", dislikes=" + dislikes +
                 ", user=" + user +
                 ", commentSet=" + commentSet +
                 ", tagSet=" + tagSet +
@@ -205,8 +207,8 @@ public class Image {
         if (Location != null ? !Location.equals(image.Location) : image.Location != null) return false;
         if (createdDate != null ? !createdDate.equals(image.createdDate) : image.createdDate != null) return false;
         if (changedDate != null ? !changedDate.equals(image.changedDate) : image.changedDate != null) return false;
-        if (likesCount != null ? !likesCount.equals(image.likesCount) : image.likesCount != null) return false;
-        if (dislikesCount != null ? !dislikesCount.equals(image.dislikesCount) : image.dislikesCount != null)
+        if (likes != null ? !likes.equals(image.likes) : image.likes != null) return false;
+        if (dislikes != null ? !dislikes.equals(image.dislikes) : image.dislikes != null)
             return false;
         if (user != null ? !user.getId().equals(image.user.getId()) : image.user != null) return false;
         return true;

@@ -40,16 +40,23 @@ public class indexControler {
         if(actual == null) {
             image = serv.getFirstImage();
         } else {
-            image = serv.getNextImageById(UUID.fromString(actual));
+           // image = serv.getNextImageById(UUID.fromString(actual));
+            image = serv.getImageById(UUID.fromString(actual));
         }
 
         if (image == null) {
             image = serv.getFirstImage();
         }
 
+        String next;
+        if (serv.getNextImageById(UUID.fromString(actual)) == null) {
+            next = serv.getFirstImage().getId().toString();
+        }else{
+            next = serv.getNextImageById(UUID.fromString(actual)).getId().toString();
+        }
         model.addAttribute("image", image);
         model.addAttribute("actual", image.getId().toString());
-
+        model.addAttribute("next", next);
         if (!image.getLocation().startsWith("http")) {
             model.addAttribute("path", path);
         } else {
@@ -75,18 +82,18 @@ public class indexControler {
         return "redirect:/projekt";
     }
 
-    @RequestMapping("/likeComment")
+    @RequestMapping("/likeComent")
     public String likeComment(RedirectAttributes redirectAttributes, @RequestParam(value = "id") String id,
-                              @RequestParam(value = "commentId") String commentId) {
-        serv.LikeComent(UUID.fromString(commentId));
+                              @RequestParam(value = "commentId") String comentId) {
+        serv.LikeComent(UUID.fromString(comentId));
         redirectAttributes.addAttribute("id", id);
         return "redirect:/projekt";
     }
 
-    @RequestMapping("/dislikeComment")
+    @RequestMapping("/dislikeComent")
     public String dislikeComment(RedirectAttributes redirectAttributes, @RequestParam(value = "id") String id,
-                                 @RequestParam(value = "commentId") String commentId) {
-        serv.DislikeComent(UUID.fromString(commentId));
+                                 @RequestParam(value = "commentId") String comentId) {
+        serv.DislikeComent(UUID.fromString(comentId));
         redirectAttributes.addAttribute("id", id);
         return "redirect:/projekt";
     }

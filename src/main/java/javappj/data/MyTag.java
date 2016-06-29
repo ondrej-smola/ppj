@@ -21,7 +21,7 @@ public class MyTag {
 
     @Id
     @org.springframework.data.annotation.Id
-    @Column
+    @Column(columnDefinition = "BINARY(16)")
     private UUID id;
 
     @Column(name = "value", unique=true)

@@ -13,16 +13,16 @@ import java.util.UUID;
  * Created by The CAT
  */
 @Entity
-@Table(name = "comments")
-@Document(collection = "comments")
+@Table(name = "coments")
+@Document(collection = "coments")
 public class Coment {
     @Id
     @org.springframework.data.annotation.Id
-    @Column
+    @Column(columnDefinition = "BINARY(16)")
     private UUID id;
 
-    @Column(name = "comment")
-    private String comment;
+    @Column(name = "coment")
+    private String coment;
 
     @Column(name = "created")
     private Date createdDate;
@@ -31,14 +31,14 @@ public class Coment {
     private Date changedDate;
 
     @Column(name = "likes")
-    private Integer likesCount;
+    private Integer likes;
 
     @Column(name = "dislikes")
-    private Integer dislikesCount;
+    private Integer dislikes;
 
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "author_id")
+    @JoinColumn(name = "user_id")
     @DBRef(lazy=true)
     private User user;
 
@@ -55,19 +55,19 @@ public class Coment {
         this.id = id;
     }
 
-    public Coment(UUID id, String comment, User user, Image image) {
+    public Coment(UUID id, String coment, User user, Image image) {
         this.id = id;
-        this.comment = comment;
+        this.coment = coment;
         this.user = user;
         this.createdDate = new Date();
-        this.likesCount = 0;
-        this.dislikesCount = 0;
+        this.likes = 0;
+        this.dislikes = 0;
         this.image = image;
     }
 
-    public Coment(UUID id, String comment, User user) {
+    public Coment(UUID id, String coment, User user) {
         this.id = id;
-        this.comment = comment;
+        this.coment = coment;
         this.user = user;
     }
 
@@ -75,21 +75,8 @@ public class Coment {
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
     }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setComent(String comment) {
+        this.coment = comment;
     }
 
     public Date getCreatedDate() {
@@ -104,40 +91,37 @@ public class Coment {
         return changedDate;
     }
 
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public String getComent() {
+        return coment;
+    }
+
+
+
     public void setChangedDate(Date changedDate) {
         this.changedDate = changedDate;
     }
 
-    public Integer getLikesCount() {
-        return likesCount;
+    public Integer getLikes() {
+        return likes;
     }
-    public void setLikesCount(Integer likesCount) {
-        this.likesCount = likesCount;
-    }
-
-
-
-    public void setDislikesCount(Integer dislikesCount) {
-        this.dislikesCount = dislikesCount;
-    }
-    public void Like() {
-        this.likesCount = this.likesCount+1;
-    }
-
-    public Integer getDislikesCount() {
-        return dislikesCount;
-    }
-
-    public void Dislike() {
-        this.dislikesCount =  this.dislikesCount+1;
+    public void setLikes(Integer likes) {
+        this.likes = likes;
     }
 
     public User getUser() {
         return user;
     }
 
-    public void setUser(User author) {
-        this.user = author;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Image getImage() {
@@ -148,6 +132,24 @@ public class Coment {
         this.image = image;
     }
 
+    public void setDislikes(Integer dislikes) {
+        this.dislikes = dislikes;
+    }
+
+    public void Like() {
+        this.likes = this.likes+1;
+    }
+
+    public Integer getDislikes() {
+        return dislikes;
+    }
+
+    public void Dislike() {
+        this.dislikes =  this.dislikes+1;
+    }
+
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -156,13 +158,13 @@ public class Coment {
         Coment comment1 = (Coment) o;
 
         if (id != null ? !id.equals(comment1.id) : comment1.id != null) return false;
-        if (comment != null ? !comment.equals(comment1.comment) : comment1.comment != null) return false;
+        if (coment != null ? !coment.equals(comment1.coment) : comment1.coment != null) return false;
         if (createdDate != null ? !createdDate.equals(comment1.createdDate) : comment1.createdDate != null)
             return false;
         if (changedDate != null ? !changedDate.equals(comment1.changedDate) : comment1.changedDate != null)
             return false;
-        if (likesCount != null ? !likesCount.equals(comment1.likesCount) : comment1.likesCount != null) return false;
-        if (dislikesCount != null ? !dislikesCount.equals(comment1.dislikesCount) : comment1.dislikesCount != null)
+        if (likes != null ? !likes.equals(comment1.likes) : comment1.likes != null) return false;
+        if (dislikes != null ? !dislikes.equals(comment1.dislikes) : comment1.dislikes != null)
             return false;
         if (user != null ? !user.equals(comment1.user) : comment1.user != null) return false;
         if (image != null ? !image.equals(comment1.image) : comment1.image != null) return false;
@@ -172,13 +174,13 @@ public class Coment {
 
     @Override
     public String toString() {
-        return "Comment{" +
+        return "Coment{" +
                 "id=" + id +
-                ", comment='" + comment + '\'' +
+                ", comment='" + coment + '\'' +
                 ", createdDate=" + createdDate +
                 ", changedDate=" + changedDate +
-                ", likesCount=" + likesCount +
-                ", dislikesCount=" + dislikesCount +
+                ", likes=" + likes +
+                ", dislikes=" + dislikes +
                 ", user=" + user +
                 ", image=" + image.getName() +
                 '}';
