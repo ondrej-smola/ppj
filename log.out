@@ -1,1 +1,4 @@
-00:08:01.704 [main] WARN  javappj.Main - We are online!
+20:39:38.627 [main] INFO  javappj.Main - Starting Main on TheCAT-Krabice with PID 19308 (started by The CAT in C:\Users\The CAT\Documents\vejska\ppj)
+20:39:38.712 [main] INFO  javappj.Main - The following profiles are active: mysql
+20:40:10.249 [main] INFO  javappj.Main - Started Main in 35.045 seconds (JVM running for 38.612)
+20:40:10.250 [main] WARN  javappj.Main - START

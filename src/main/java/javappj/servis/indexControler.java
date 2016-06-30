@@ -19,7 +19,7 @@ import java.util.UUID;
 
 @Controller
 @RequestMapping("/")
-public class indexControler {
+public class IndexControler {
     @Autowired
     private Serv serv;
 

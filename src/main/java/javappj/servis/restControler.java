@@ -10,8 +10,8 @@ import java.io.IOException;
  * Created by The CAT
  */
 @RestController
-public class restControler {
-    private fileSys file;
+public class RestControler {
+    private FileSys file;
 
     public static final String UPLOAD_PATH = "/upload/{name}";
 
@@ -23,7 +23,7 @@ public class restControler {
         System.out.println("UPLOAD");
         try {
 
-            file =new fileSys();
+            file =new FileSys();
 
         } catch (IOException e) {
 

@@ -12,7 +12,7 @@ import java.nio.file.StandardCopyOption;
 /**
  * Created by The CAT on 25.4.2016.
  */
-public class fileSys {
+public class FileSys {
 
 
    /* public static fileSys get() throws IOException {
@@ -22,7 +22,7 @@ public class fileSys {
     @Value("${path}")
     private String imgpath;
 
-    public fileSys() throws IOException {
+    public FileSys() throws IOException {
         Path path = Paths.get(imgpath);
         if (!Files.exists(path)) {
             Files.createDirectories(path);
